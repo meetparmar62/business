@@ -1,0 +1,220 @@
+/* Custom Styles */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4b5563;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Video background optimization for mobile */
+.video-bg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Ensure video doesn't break on mobile */
+@media (max-width: 768px) {
+    .video-bg {
+        object-fit: cover;
+        min-width: 100%;
+        min-height: 100%;
+        position: fixed;
+    }
+}
+
+/* AI Chat Style Cards - More Transparent */
+.service-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 24px;
+    padding: 32px;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: visible;
+    margin: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient border effect - Always visible */
+.service-card::before {
+    content: '';
+    position: absolute;
+   
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(90deg, #f97316 0%, #ef4444 30%, #8b5cf6 70%, #3b82f6 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.8;
+}
+
+/* Outer glow effect - Always visible */
+.service-card::after {
+    content: '';
+    position: absolute;
+    inset: -30px;
+    border-radius: 44px;
+    background: 
+        radial-gradient(ellipse 60% 80% at 0% 50%, rgba(249, 115, 22, 0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 100% 50%, rgba(59, 130, 246, 0.5) 0%, transparent 60%);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(25px);
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card:hover::after {
+    opacity: 0.9;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button {
+    transition: all 0.3s ease;
+}
+
+/* Navbar animation */
+nav {
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hero content animation */
+#home > div > div > * {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Service cards staggered animation */
+.justify-center > div:nth-child(1) {
+    animation: fadeInUp 0.6s ease-out 0.1s forwards;
+}
+
+.justify-center > div:nth-child(2) {
+    animation: fadeInUp 0.6s ease-out 0.2s forwards;
+}
+
+.justify-center > div:nth-child(3) {
+    animation: fadeInUp 0.6s ease-out 0.3s forwards;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    section {
+        padding: 3rem 1rem;
+    }
+}
+
+/* Service cards entrance animation */
+@keyframes cardFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.service-card {
+    animation: cardFadeInUp 0.6s ease-out forwards;
+}
+
+.service-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2) { animation-delay: 0.15s; }
+.service-card:nth-child(3) { animation-delay: 0.2s; }
+.service-card:nth-child(4) { animation-delay: 0.25s; }
+.service-card:nth-child(5) { animation-delay: 0.3s; }
+.service-card:nth-child(6) { animation-delay: 0.35s; }
+.service-card:nth-child(7) { animation-delay: 0.4s; }
+.service-card:nth-child(8) { animation-delay: 0.45s; }
+.service-card:nth-child(9) { animation-delay: 0.5s; }
+
+/* Icon glow effect on hover */
+.service-card:hover .icon-container {
+    box-shadow: 0 0 30px rgba(107, 114, 128, 0.5);
+}
+
+/* Smooth gradient border animation */
+@keyframes borderGlow {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Logo styling */
+nav img {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    margin-left: -26px;
+    margin-top: 33px;
+}
+
+@media (min-width: 768px) {
+    nav img {
+        height: 140px;
+    }
+}
