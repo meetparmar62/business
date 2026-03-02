@@ -22,6 +22,33 @@ if (mobileMenuBtn) {
     });
 }
 
+// Services Dropdown Toggle
+const servicesDropdownBtn = document.getElementById('services-dropdown-btn');
+const servicesDropdown = document.getElementById('services-dropdown');
+const dropdownArrow = document.getElementById('dropdown-arrow');
+
+if (servicesDropdownBtn) {
+    servicesDropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        servicesDropdown.classList.toggle('hidden');
+        
+        // Rotate arrow
+        if (servicesDropdown.classList.contains('hidden')) {
+            dropdownArrow.style.transform = 'rotate(0deg)';
+        } else {
+            dropdownArrow.style.transform = 'rotate(180deg)';
+        }
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!servicesDropdownBtn.contains(e.target) && !servicesDropdown.contains(e.target)) {
+            servicesDropdown.classList.add('hidden');
+            dropdownArrow.style.transform = 'rotate(0deg)';
+        }
+    });
+}
+
 // Close mobile menu when a link is clicked
 const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 mobileMenuLinks.forEach(link => {
