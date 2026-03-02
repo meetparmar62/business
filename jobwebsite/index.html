@@ -17,7 +17,7 @@
     <!-- Full Page Black Overlay -->
     <div class="fixed inset-0 bg-black/60" style="z-index: 2;"></div>
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-gradient-to-b from-black/90 to-transparent">
+    <nav class="fixed top-0 w-full z-50 bg-white/5 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -35,20 +35,22 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden flex flex-col space-y-1">
-                    <span class="block w-6 h-0.5 bg-white"></span>
-                    <span class="block w-6 h-0.5 bg-white"></span>
-                    <span class="block w-6 h-0.5 bg-white"></span>
+                <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300">
+                    <div class="flex flex-col space-y-1.5">
+                        <span class="block w-5 h-0.5 bg-white rounded-full transition-all duration-300" id="menu-line-1"></span>
+                        <span class="block w-5 h-0.5 bg-white rounded-full transition-all duration-300" id="menu-line-2"></span>
+                        <span class="block w-5 h-0.5 bg-white rounded-full transition-all duration-300" id="menu-line-3"></span>
+                    </div>
                 </button>
             </div>
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pb-4 space-y-2">
-                <a href="#home" class="block hover:text-white transition duration-300 py-2">HOME</a>
-                <a href="#about" class="block hover:text-white transition duration-300 py-2">ABOUT</a>
-                <a href="#services" class="block hover:text-white transition duration-300 py-2">SERVICES</a>
-                <a href="#portfolio" class="block hover:text-white transition duration-300 py-2">PORTFOLIO</a>
-                <a href="#contact" class="block hover:text-white transition duration-300 py-2">CONTACT</a>
+            <div id="mobile-menu" class="hidden md:hidden absolute top-full left-4 right-4 mt-2 py-4 px-4 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 shadow-2xl">
+                <a href="#home" class="block text-white/80 hover:text-white hover:bg-white/10 rounded-lg px-4 py-3 transition-all duration-300">HOME</a>
+                <a href="#about" class="block text-white/80 hover:text-white hover:bg-white/10 rounded-lg px-4 py-3 transition-all duration-300">ABOUT</a>
+                <a href="#services" class="block text-white/80 hover:text-white hover:bg-white/10 rounded-lg px-4 py-3 transition-all duration-300">SERVICES</a>
+                <a href="#portfolio" class="block text-white/80 hover:text-white hover:bg-white/10 rounded-lg px-4 py-3 transition-all duration-300">PORTFOLIO</a>
+                <a href="#contact" class="block text-white/80 hover:text-white hover:bg-white/10 rounded-lg px-4 py-3 transition-all duration-300">CONTACT</a>
             </div>
         </div>
     </nav>

@@ -1,10 +1,24 @@
 // Mobile Menu Toggle
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
+const menuLine1 = document.getElementById('menu-line-1');
+const menuLine2 = document.getElementById('menu-line-2');
+const menuLine3 = document.getElementById('menu-line-3');
 
 if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
+        
+        // Animate hamburger to X
+        if (mobileMenu.classList.contains('hidden')) {
+            menuLine1.style.transform = 'rotate(0) translate(0, 0)';
+            menuLine2.style.opacity = '1';
+            menuLine3.style.transform = 'rotate(0) translate(0, 0)';
+        } else {
+            menuLine1.style.transform = 'rotate(45deg) translate(5px, 5px)';
+            menuLine2.style.opacity = '0';
+            menuLine3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        }
     });
 }
 
@@ -41,7 +55,7 @@ if (videoElement) {
     }
 }
 
-// Navbar scroll effect
+// Navbar scroll effect - Keep glass effect
 let lastScrollTop = 0;
 const navbar = document.querySelector('nav');
 
@@ -49,9 +63,13 @@ window.addEventListener('scroll', () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
     if (scrollTop > 50) {
-        navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+        navbar.style.background = 'rgba(255, 255, 255, 0.08)';
+        navbar.style.backdropFilter = 'blur(20px)';
+        navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.15)';
     } else {
-        navbar.style.backgroundColor = 'transparent';
+        navbar.style.background = 'rgba(255, 255, 255, 0.05)';
+        navbar.style.backdropFilter = 'blur(12px)';
+        navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
     }
     
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;

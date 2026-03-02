@@ -209,8 +209,8 @@ nav img {
     height: 120px;
     width: auto;
     object-fit: contain;
-    margin-left: -26px;
-    margin-top: 33px;
+    margin-left: -33px;
+    margin-top: 16px;
 }
 
 @media (min-width: 768px) {
