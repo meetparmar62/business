@@ -5,24 +5,63 @@ const menuLine1 = document.getElementById('menu-line-1');
 const menuLine2 = document.getElementById('menu-line-2');
 const menuLine3 = document.getElementById('menu-line-3');
 
+function openMobileMenu() {
+    mobileMenu.classList.remove('hidden');
+    // Small delay to allow display:block to apply before opacity transition
+    setTimeout(() => {
+        mobileMenu.style.opacity = '1';
+        mobileMenu.style.transform = 'translateX(-50%) scale(1)';
+    }, 10);
+    
+    // Animate hamburger to X
+    menuLine1.style.transform = 'rotate(45deg) translate(5px, 5px)';
+    menuLine2.style.opacity = '0';
+    menuLine3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+}
+
+function closeMobileMenu() {
+    mobileMenu.style.opacity = '0';
+    mobileMenu.style.transform = 'translateX(-50%) scale(0.95)';
+    
+    setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+    }, 300);
+    
+    // Reset hamburger
+    menuLine1.style.transform = 'rotate(0) translate(0, 0)';
+    menuLine2.style.opacity = '1';
+    menuLine3.style.transform = 'rotate(0) translate(0, 0)';
+}
+
 if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-        
-        // Animate hamburger to X
         if (mobileMenu.classList.contains('hidden')) {
-            menuLine1.style.transform = 'rotate(0) translate(0, 0)';
-            menuLine2.style.opacity = '1';
-            menuLine3.style.transform = 'rotate(0) translate(0, 0)';
+            openMobileMenu();
         } else {
-            menuLine1.style.transform = 'rotate(45deg) translate(5px, 5px)';
-            menuLine2.style.opacity = '0';
-            menuLine3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            closeMobileMenu();
         }
     });
 }
 
-// Services Dropdown Toggle
+// Close menu on scroll
+let menuScrollTimeout;
+window.addEventListener('scroll', () => {
+    if (!mobileMenu.classList.contains('hidden')) {
+        clearTimeout(menuScrollTimeout);
+        menuScrollTimeout = setTimeout(() => {
+            closeMobileMenu();
+        }, 150);
+    }
+});
+
+// Close menu when clicking on a link
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        closeMobileMenu();
+    });
+});
+
+// Services Dropdown Toggle (Desktop)
 const servicesDropdownBtn = document.getElementById('services-dropdown-btn');
 const servicesDropdown = document.getElementById('services-dropdown');
 const dropdownArrow = document.getElementById('dropdown-arrow');
@@ -45,6 +84,24 @@ if (servicesDropdownBtn) {
         if (!servicesDropdownBtn.contains(e.target) && !servicesDropdown.contains(e.target)) {
             servicesDropdown.classList.add('hidden');
             dropdownArrow.style.transform = 'rotate(0deg)';
+        }
+    });
+}
+
+// Mobile Services Dropdown Toggle
+const mobileServicesBtn = document.getElementById('mobile-services-btn');
+const mobileServicesDropdown = document.getElementById('mobile-services-dropdown');
+const mobileServicesArrow = document.getElementById('mobile-services-arrow');
+
+if (mobileServicesBtn) {
+    mobileServicesBtn.addEventListener('click', () => {
+        mobileServicesDropdown.classList.toggle('hidden');
+        
+        // Rotate arrow
+        if (mobileServicesDropdown.classList.contains('hidden')) {
+            mobileServicesArrow.style.transform = 'rotate(0deg)';
+        } else {
+            mobileServicesArrow.style.transform = 'rotate(180deg)';
         }
     });
 }
