@@ -195,7 +195,7 @@ function updateSlide() {
 
 sliderButtons.forEach(button => {
     button.addEventListener('click', function() {
-        const isNext = this.textContent === '›';
+        const isNext = this.id === 'next-slide';
         
         if (isNext) {
             currentSlide = (currentSlide + 1) % slides.length;
@@ -206,6 +206,38 @@ sliderButtons.forEach(button => {
         updateSlide();
     });
 });
+
+// Touch swipe support for mobile
+const heroSection = document.querySelector('#home');
+let touchStartX = 0;
+let touchEndX = 0;
+
+if (heroSection) {
+    heroSection.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    
+    heroSection.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+}
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            // Swipe left - next slide
+            currentSlide = (currentSlide + 1) % slides.length;
+        } else {
+            // Swipe right - previous slide
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        }
+        updateSlide();
+    }
+}
 
 // Intersection Observer for animation on scroll
 const observerOptions = {
