@@ -128,14 +128,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Video optimization for mobile - Use compressed video if available
 const videoElement = document.querySelector('video');
 if (videoElement) {
-    // Check if mobile
+    // Force muted state for iOS autoplay to work
+    videoElement.muted = true;
+    videoElement.setAttribute('muted', 'true');
+    
+    // Ensure playsinline attributes are set
+    videoElement.setAttribute('playsinline', 'true');
+    videoElement.setAttribute('webkit-playsinline', 'true');
+    
+    // iOS Safari autoplay fix - explicitly play the video
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const isMobile = window.innerWidth <= 768;
     
-    // You can set different video sources based on device
-    if (isMobile) {
-        // For mobile, ensure proper playback
-        videoElement.setAttribute('playsinline', 'true');
-        videoElement.setAttribute('webkit-playsinline', 'true');
+    if (isIOS || isMobile) {
+        // Attempt to play video explicitly
+        videoElement.play().catch(error => {
+            console.log('Video autoplay was prevented:', error);
+        });
     }
 }
 
