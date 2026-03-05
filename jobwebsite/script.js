@@ -125,28 +125,92 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Video optimization for mobile - Use compressed video if available
-const videoElement = document.querySelector('video');
-if (videoElement) {
-    // Force muted state for iOS autoplay to work
-    videoElement.muted = true;
-    videoElement.setAttribute('muted', 'true');
+// Video optimization for mobile - iOS Autoplay Fix
+document.addEventListener('DOMContentLoaded', () => {
+    const videoElement = document.getElementById('bg-video') || document.querySelector('video');
     
-    // Ensure playsinline attributes are set
-    videoElement.setAttribute('playsinline', 'true');
-    videoElement.setAttribute('webkit-playsinline', 'true');
-    
-    // iOS Safari autoplay fix - explicitly play the video
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isIOS || isMobile) {
-        // Attempt to play video explicitly
-        videoElement.play().catch(error => {
-            console.log('Video autoplay was prevented:', error);
+    if (videoElement) {
+        // CRITICAL: Set muted property BEFORE attempting to play
+        videoElement.muted = true;
+        videoElement.defaultMuted = true;
+        
+        // Remove controls to prevent user interaction
+        videoElement.removeAttribute('controls');
+        
+        // Ensure loop is enabled
+        videoElement.loop = true;
+        
+        // iOS detection
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        // Function to attempt playing video
+        const playVideo = () => {
+            videoElement.play().then(() => {
+                console.log('Video started playing successfully');
+            }).catch(error => {
+                console.log('Video play attempt failed:', error);
+                // Retry after a short delay
+                setTimeout(() => {
+                    videoElement.play().catch(e => console.log('Retry failed:', e));
+                }, 500);
+            });
+        };
+        
+        // For iOS devices
+        if (isIOS) {
+            console.log('iOS device detected, applying iOS-specific fixes');
+            
+            // Set additional iOS-specific attributes
+            videoElement.setAttribute('autoplay', 'true');
+            videoElement.setAttribute('loop', 'true');
+            videoElement.setAttribute('preload', 'auto');
+            
+            // Try to play immediately
+            playVideo();
+            
+            // Also try on first user interaction (iOS requires user gesture)
+            const enableVideoOnInteraction = () => {
+                playVideo();
+                // Remove listeners after first successful play
+                document.removeEventListener('touchstart', enableVideoOnInteraction);
+                document.removeEventListener('click', enableVideoOnInteraction);
+            };
+            
+            // Add one-time interaction listeners
+            document.addEventListener('touchstart', enableVideoOnInteraction, { once: true });
+            document.addEventListener('click', enableVideoOnInteraction, { once: true });
+        } else {
+            // Non-iOS devices
+            playVideo();
+        }
+        
+        // Handle visibility change (when user switches tabs)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && videoElement.paused) {
+                playVideo();
+            }
+        });
+        
+        // Ensure video stays playing
+        videoElement.addEventListener('pause', () => {
+            if (!videoElement.paused) return;
+            setTimeout(() => {
+                if (videoElement.paused && videoElement.readyState >= 2) {
+                    playVideo();
+                }
+            }, 100);
+        });
+        
+        // Log video state for debugging
+        videoElement.addEventListener('playing', () => {
+            console.log('Video is now playing');
+        });
+        
+        videoElement.addEventListener('waiting', () => {
+            console.log('Video is buffering');
         });
     }
-}
+});
 
 // Navbar scroll effect - Keep glass effect
 let lastScrollTop = 0;
